@@ -1,0 +1,47 @@
+# Starship Configuration - Fast & Beautiful
+
+# Timeout for commands
+command_timeout = 500
+
+# Prompt format
+format = """
+$directory\
+$git_branch\
+$git_status\
+$nodejs\
+$python\
+$time\
+$line_break\
+$character"""
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+
+[directory]
+style = "bold cyan"
+truncation_length = 3
+truncate_to_repo = true
+
+[git_branch]
+symbol = "git:"
+style = "bold green"
+
+[git_status]
+style = "bold yellow"
+
+[nodejs]
+symbol = "node:"
+format = "[$symbol$version]($style) "
+style = "green"
+
+[python]
+symbol = "py:"
+format = "[$symbol$version]($style) "
+style = "yellow"
+
+[time]
+disabled = false
+format = "[$time]($style) "
+time_format = "%H:%M"
+style = "dimmed white"
