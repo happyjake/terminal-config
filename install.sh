@@ -74,14 +74,21 @@ else
     print_success "Fastfetch is already installed"
 fi
 
-# Optional: Install JetBrains Mono font
-read -p "Do you want to install JetBrains Mono Nerd Font? (y/n) " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    print_info "Installing JetBrains Mono Nerd Font..."
-    brew tap homebrew/cask-fonts 2>/dev/null || true
-    brew install --cask font-jetbrains-mono-nerd-font
-    print_success "Font installed"
+# Install fonts (JetBrains Mono and Symbols Nerd Font)
+print_info "Installing required fonts..."
+brew tap homebrew/cask-fonts 2>/dev/null || true
+brew install --cask font-jetbrains-mono 2>/dev/null || print_warning "JetBrains Mono may already be installed"
+brew install --cask font-symbols-only-nerd-font 2>/dev/null || print_warning "Symbols Nerd Font may already be installed"
+print_success "Fonts installed"
+
+# Check and install Ghostty if available
+if command -v ghostty &> /dev/null; then
+    print_success "Ghostty is installed"
+    GHOSTTY_INSTALLED=true
+else
+    print_warning "Ghostty is not installed. Skipping Ghostty configuration."
+    print_info "To install Ghostty, visit: https://ghostty.org"
+    GHOSTTY_INSTALLED=false
 fi
 
 # Backup existing configs
@@ -89,6 +96,7 @@ print_info "Backing up existing configurations..."
 [ -f ~/.zshrc ] && cp ~/.zshrc ~/.zshrc.backup.$(date +%Y%m%d_%H%M%S)
 [ -f ~/.config/starship.toml ] && cp ~/.config/starship.toml ~/.config/starship.toml.backup.$(date +%Y%m%d_%H%M%S)
 [ -f ~/.config/fastfetch/config.jsonc ] && cp ~/.config/fastfetch/config.jsonc ~/.config/fastfetch/config.jsonc.backup.$(date +%Y%m%d_%H%M%S)
+[ -f ~/.config/ghostty/config ] && cp ~/.config/ghostty/config ~/.config/ghostty/config.backup.$(date +%Y%m%d_%H%M%S)
 print_success "Backups created"
 
 # Download configurations
@@ -115,6 +123,26 @@ curl -sSL "$REPO_URL/starship.toml" -o ~/.config/starship.toml
 mkdir -p ~/.config/fastfetch
 curl -sSL "$REPO_URL/fastfetch/config.jsonc" -o ~/.config/fastfetch/config.jsonc
 
+# Download Ghostty config if Ghostty is installed
+if [ "$GHOSTTY_INSTALLED" = true ]; then
+    print_info "Installing Ghostty configuration..."
+    mkdir -p ~/.config/ghostty
+    curl -sSL "$REPO_URL/.config/ghostty/config" -o ~/.config/ghostty/config
+    curl -sSL "$REPO_URL/.config/ghostty/switch-theme.sh" -o ~/.config/ghostty/switch-theme.sh
+    chmod +x ~/.config/ghostty/switch-theme.sh
+
+    # Add Ghostty shell integration to .zshrc if not already present
+    if ! grep -q "GHOSTTY_RESOURCES_DIR" ~/.zshrc 2>/dev/null; then
+        print_info "Adding Ghostty shell integration..."
+        echo '' >> ~/.zshrc
+        echo '# Ghostty Shell Integration' >> ~/.zshrc
+        echo 'if [ -n "${GHOSTTY_RESOURCES_DIR}" ]; then' >> ~/.zshrc
+        echo '    builtin source "${GHOSTTY_RESOURCES_DIR}/shell-integration/zsh/ghostty-integration"' >> ~/.zshrc
+        echo 'fi' >> ~/.zshrc
+    fi
+    print_success "Ghostty configuration installed"
+fi
+
 print_success "Configuration files installed"
 
 # Final instructions
@@ -129,6 +157,10 @@ echo ""
 print_info "To customize:"
 echo -e "  Starship: ${YELLOW}~/.config/starship.toml${NC}"
 echo -e "  Fastfetch: ${YELLOW}~/.config/fastfetch/config.jsonc${NC}"
+if [ "$GHOSTTY_INSTALLED" = true ]; then
+    echo -e "  Ghostty: ${YELLOW}~/.config/ghostty/config${NC}"
+    echo -e "  Switch Ghostty themes: ${YELLOW}~/.config/ghostty/switch-theme.sh${NC}"
+fi
 echo ""
 print_info "For more information, visit:"
 echo -e "  ${BLUE}https://github.com/happyjake/terminal-config${NC}"

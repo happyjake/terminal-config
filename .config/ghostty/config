@@ -1,0 +1,162 @@
+# Ghostty Modern Configuration
+# SOTA Terminal Setup with Premium Aesthetics
+
+# Theme - Ultra Modern Dark Themes (uncomment your favorite)
+# theme = Catppuccin Mocha       # Smooth pastel dark
+# theme = Dracula+               # Classic vampire vibes
+# theme = TokyoNight Storm       # Cyberpunk storm aesthetic
+# theme = Nord                   # Arctic, north-bluish
+# theme = Gruvbox Material       # Retro warm dark
+# theme = Synthwave Alpha        # 80s neon aesthetic
+# theme = Cyberpunk              # Futuristic hacker theme
+# theme = Material Ocean         # Deep ocean material
+theme = TokyoNight Storm
+
+# Font Configuration - Modern coding font
+font-family = "JetBrains Mono"
+font-size = 14
+font-feature = calt
+font-feature = liga
+font-feature = zero
+font-feature = ss01
+font-feature = ss02
+font-feature = ss03
+font-feature = ss04
+font-feature = ss07
+font-feature = ss08
+font-thicken = true
+
+# Fallback fonts for icons and symbols
+font-family = "Symbols Nerd Font"
+font-family = "Apple Color Emoji"
+
+# Window Configuration
+window-padding-x = 20
+window-padding-y = 20
+window-decoration = true
+window-theme = dark
+unfocused-split-opacity = 0.9
+
+# Background and transparency - Glass morphism effect
+background-opacity = 0.92
+background-blur-radius = 30
+
+# Cursor styling - Neon glow effect
+cursor-style = block
+cursor-style-blink = true
+cursor-opacity = 0.8
+# cursor-color = "#7aa2f7"  # Blue neon (uncomment to override theme)
+
+# Scrollback
+scrollback-limit = 10000
+
+# Tab bar
+window-colorspace = display-p3
+window-vsync = true
+
+# Shell integration
+shell-integration = detect
+shell-integration-features = cursor,sudo,title
+
+# Copy on select
+copy-on-select = clipboard
+
+# Mouse
+mouse-hide-while-typing = true
+
+# Performance
+gtk-single-instance = true
+
+# macOS specific
+macos-option-as-alt = true
+macos-titlebar-style = tabs
+macos-titlebar-proxy-icon = visible
+
+# Keybindings for modern workflow
+keybind = cmd+shift+enter=new_window
+keybind = cmd+d=new_split:right
+keybind = cmd+shift+d=new_split:down
+keybind = cmd+w=close_surface
+keybind = cmd+shift+c=copy_to_clipboard
+keybind = cmd+shift+v=paste_from_clipboard
+keybind = cmd+shift+f=toggle_fullscreen
+keybind = cmd+plus=increase_font_size:1
+keybind = cmd+minus=decrease_font_size:1
+keybind = cmd+zero=reset_font_size
+keybind = cmd+k=clear_screen
+# keybind = cmd+shift+k=clear_to_prompt  # Not supported, using clear_screen instead
+keybind = cmd+shift+k=clear_screen
+keybind = cmd+shift+p=open_config
+keybind = cmd+shift+comma=reload_config
+
+# Quick navigation
+keybind = cmd+left=goto_split:left
+keybind = cmd+right=goto_split:right
+keybind = cmd+up=goto_split:top
+keybind = cmd+down=goto_split:bottom
+
+# Tab navigation
+keybind = cmd+t=new_tab
+keybind = cmd+shift+t=new_tab
+keybind = cmd+shift+left=previous_tab
+keybind = cmd+shift+right=next_tab
+keybind = cmd+1=goto_tab:1
+keybind = cmd+2=goto_tab:2
+keybind = cmd+3=goto_tab:3
+keybind = cmd+4=goto_tab:4
+keybind = cmd+5=goto_tab:5
+keybind = cmd+6=goto_tab:6
+keybind = cmd+7=goto_tab:7
+keybind = cmd+8=goto_tab:8
+keybind = cmd+9=goto_tab:9
+
+# Window split resize
+keybind = cmd+shift+equal=equalize_splits
+keybind = cmd+alt+left=resize_split:left,10
+keybind = cmd+alt+right=resize_split:right,10
+keybind = cmd+alt+up=resize_split:up,10
+keybind = cmd+alt+down=resize_split:down,10
+
+# Advanced features
+clipboard-read = allow
+clipboard-write = allow
+clipboard-paste-protection = true
+clipboard-trim-trailing-spaces = true
+
+# Bell
+# audible-bell = false  # Not supported in current version
+# visual-bell = true    # Not supported in current version
+# visual-bell-duration = 200  # Not supported in current version
+# visual-bell-animation = ease-out  # Not supported in current version
+
+# Confirm on close
+confirm-close-surface = false
+
+# Quick terminal
+quick-terminal-position = top
+quick-terminal-screen = main
+quick-terminal-animation-duration = 200
+
+# Resize overlay
+resize-overlay = never
+
+# Focus follows mouse
+focus-follows-mouse = false
+
+# Bold text brightness
+bold-is-bright = true
+
+# Selection
+selection-foreground = "#1e1e2e"
+selection-background = "#f5e0dc"
+selection-invert-fg-bg = false
+
+# Window controls
+window-save-state = always
+quit-after-last-window-closed = false
+
+# Auto-update
+auto-update = check
+
+# Link handling
+link-url = true

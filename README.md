@@ -44,9 +44,10 @@ brew install starship
 # Install Fastfetch for system info
 brew install fastfetch
 
-# Install JetBrains Mono font (optional but recommended)
+# Install fonts for better display
 brew tap homebrew/cask-fonts
 brew install --cask font-jetbrains-mono
+brew install --cask font-symbols-only-nerd-font
 ```
 
 2. **Clone this repository:**
@@ -77,6 +78,12 @@ cp starship.toml ~/.config/
 # Copy Fastfetch config
 mkdir -p ~/.config/fastfetch
 cp fastfetch/config.jsonc ~/.config/fastfetch/
+
+# Copy Ghostty config (if using Ghostty)
+mkdir -p ~/.config/ghostty
+cp .config/ghostty/config ~/.config/ghostty/
+cp .config/ghostty/switch-theme.sh ~/.config/ghostty/
+chmod +x ~/.config/ghostty/switch-theme.sh
 ```
 
 5. **Reload your shell:**
@@ -109,24 +116,48 @@ View available logos:
 fastfetch --print-logos
 ```
 
-### Terminal Theme
+### Terminal Theme (Ghostty)
 
-If using Ghostty, you can change themes by editing `~/.config/ghostty/config`:
+Ghostty includes several beautiful dark themes. Change themes easily:
+
+**Quick theme switcher:**
+```bash
+~/.config/ghostty/switch-theme.sh
+```
+
+**Or manually edit** `~/.config/ghostty/config`:
 ```toml
 theme = TokyoNight Storm  # Current theme
-# Other options: Catppuccin Mocha, Dracula+, Nord, Gruvbox Material
 ```
+
+Available themes:
+- Tokyo Night Storm - Stormy cyberpunk vibes
+- Catppuccin Mocha - Smooth pastel dark
+- Dracula+ - Classic vampire aesthetic
+- Nord - Arctic blue minimalism
+- Gruvbox Material - Retro warm darkness
+- Synthwave Alpha - 80s neon dreams
+- Cyberpunk - Futuristic hacker
+- Material Ocean - Deep ocean depths
+- Monokai Pro - Classic syntax highlighting
+- Atom One Dark - Atom-inspired elegance
 
 ## 🔧 Configuration Files
 
 - `.zshrc` - Zsh shell configuration with Starship and Fastfetch integration
 - `starship.toml` - Starship prompt configuration
 - `fastfetch/config.jsonc` - Fastfetch system info display configuration
+- `.config/ghostty/config` - Ghostty terminal configuration
+- `.config/ghostty/switch-theme.sh` - Interactive theme switcher for Ghostty
+- `.gitignore` - Git ignore rules for the repository
 
 ## 🚀 What Gets Installed
 
 - **Starship** - Cross-shell prompt (Rust-based, fast)
 - **Fastfetch** - System information tool (C-based, replaces Neofetch)
+- **JetBrains Mono** - Modern coding font with ligatures
+- **Symbols Nerd Font** - Icons and symbols for terminal
+- **Ghostty Configuration** - GPU-accelerated terminal settings (if Ghostty installed)
 - **Configuration files** - Optimized configs for all tools
 
 ## 🔄 Updating
@@ -139,6 +170,7 @@ git pull
 cp .zshrc ~/
 cp starship.toml ~/.config/
 cp fastfetch/config.jsonc ~/.config/fastfetch/
+cp -r .config/ghostty ~/.config/
 source ~/.zshrc
 ```
 
@@ -172,6 +204,26 @@ brew install --cask font-jetbrains-mono-nerd-font
 If shell startup is slow, comment out Fastfetch in `.zshrc`:
 ```bash
 # fastfetch  # Comment this line for faster startup
+```
+
+### Ghostty issues
+
+If Ghostty config isn't loading:
+```bash
+# Check config location
+ls ~/.config/ghostty/config
+
+# Reload config in Ghostty
+# Press: Cmd+Shift+,
+```
+
+Theme not switching:
+```bash
+# Run the theme switcher
+~/.config/ghostty/switch-theme.sh
+
+# Or manually edit the config
+vim ~/.config/ghostty/config
 ```
 
 ## 📝 Features in Detail
