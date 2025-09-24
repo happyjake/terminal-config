@@ -106,11 +106,16 @@ REPO_URL="https://raw.githubusercontent.com/happyjake/terminal-config/main"
 # Download .zshrc
 curl -sSL "$REPO_URL/.zshrc" -o /tmp/terminal-config-zshrc
 if [ -f ~/.zshrc ]; then
-    print_info "Merging with existing .zshrc..."
-    echo "" >> ~/.zshrc
-    echo "# === Modern Terminal Config Start ===" >> ~/.zshrc
-    cat /tmp/terminal-config-zshrc >> ~/.zshrc
-    echo "# === Modern Terminal Config End ===" >> ~/.zshrc
+    # Check if our config is already present
+    if grep -q "=== Modern Terminal Config" ~/.zshrc; then
+        print_warning "Terminal config already present in .zshrc, skipping merge"
+    else
+        print_info "Merging with existing .zshrc..."
+        echo "" >> ~/.zshrc
+        echo "# === Modern Terminal Config Start ===" >> ~/.zshrc
+        cat /tmp/terminal-config-zshrc >> ~/.zshrc
+        echo "# === Modern Terminal Config End ===" >> ~/.zshrc
+    fi
 else
     cp /tmp/terminal-config-zshrc ~/.zshrc
 fi
