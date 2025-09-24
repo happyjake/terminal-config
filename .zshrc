@@ -75,6 +75,12 @@ if [ -f /opt/homebrew/etc/profile.d/z.sh ]; then
     source /opt/homebrew/etc/profile.d/z.sh
 fi
 
+# Neovim aliases
+if command -v nvim &> /dev/null; then
+    alias vi='nvim'
+    alias vim='nvim'
+fi
+
 # Terminal splash screen with Fastfetch
 if [ -n "${GHOSTTY_RESOURCES_DIR}" ] || [ "$TERM_PROGRAM" = "iTerm.app" ] || [ "$TERM_PROGRAM" = "Terminal.app" ] || [ "$TERM_PROGRAM" = "Apple_Terminal" ]; then
     if command -v fastfetch &> /dev/null; then

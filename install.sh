@@ -81,6 +81,28 @@ brew install --cask font-jetbrains-mono 2>/dev/null || print_warning "JetBrains 
 brew install --cask font-symbols-only-nerd-font 2>/dev/null || print_warning "Symbols Nerd Font may already be installed"
 print_success "Fonts installed"
 
+# Install Neovim
+if ! command -v nvim &> /dev/null; then
+    print_info "Installing Neovim..."
+    brew install neovim
+    print_success "Neovim installed"
+else
+    print_success "Neovim is already installed"
+fi
+
+# Install Neovim dependencies
+print_info "Installing Neovim dependencies..."
+brew install ripgrep fd lazygit 2>/dev/null || print_warning "Some dependencies may already be installed"
+
+# Install Node.js (required for many Neovim LSP servers)
+if ! command -v node &> /dev/null; then
+    print_info "Installing Node.js for Neovim LSP support..."
+    brew install node
+    print_success "Node.js installed"
+else
+    print_success "Node.js is already installed"
+fi
+
 # Check and install Ghostty if available
 if command -v ghostty &> /dev/null; then
     print_success "Ghostty is installed"
@@ -97,7 +119,18 @@ print_info "Backing up existing configurations..."
 [ -f ~/.config/starship.toml ] && cp ~/.config/starship.toml ~/.config/starship.toml.backup.$(date +%Y%m%d_%H%M%S)
 [ -f ~/.config/fastfetch/config.jsonc ] && cp ~/.config/fastfetch/config.jsonc ~/.config/fastfetch/config.jsonc.backup.$(date +%Y%m%d_%H%M%S)
 [ -f ~/.config/ghostty/config ] && cp ~/.config/ghostty/config ~/.config/ghostty/config.backup.$(date +%Y%m%d_%H%M%S)
+[ -d ~/.config/nvim ] && mv ~/.config/nvim ~/.config/nvim.backup.$(date +%Y%m%d_%H%M%S)
 print_success "Backups created"
+
+# Setup LazyVim
+print_info "Setting up LazyVim for Neovim..."
+if [ ! -d ~/.config/nvim ]; then
+    git clone https://github.com/LazyVim/starter ~/.config/nvim
+    rm -rf ~/.config/nvim/.git
+    print_success "LazyVim installed"
+else
+    print_info "Neovim config already exists at ~/.config/nvim"
+fi
 
 # Download configurations
 print_info "Downloading configuration files..."
@@ -160,12 +193,15 @@ print_info "To apply changes, run:"
 echo -e "  ${YELLOW}source ~/.zshrc${NC}"
 echo ""
 print_info "To customize:"
+echo -e "  Neovim: ${YELLOW}nvim${NC} (LazyVim will auto-install plugins on first launch)"
 echo -e "  Starship: ${YELLOW}~/.config/starship.toml${NC}"
 echo -e "  Fastfetch: ${YELLOW}~/.config/fastfetch/config.jsonc${NC}"
 if [ "$GHOSTTY_INSTALLED" = true ]; then
     echo -e "  Ghostty: ${YELLOW}~/.config/ghostty/config${NC}"
     echo -e "  Switch Ghostty themes: ${YELLOW}~/.config/ghostty/switch-theme.sh${NC}"
 fi
+echo ""
+print_info "Neovim is configured with LazyVim. First launch will install plugins automatically."
 echo ""
 print_info "For more information, visit:"
 echo -e "  ${BLUE}https://github.com/happyjake/terminal-config${NC}"

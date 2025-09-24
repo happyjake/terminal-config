@@ -8,12 +8,14 @@ A blazingly fast, beautiful terminal setup featuring Ghostty, Starship prompt, a
 
 ## ✨ Features
 
+- **Neovim + LazyVim** - Modern IDE-like text editor with full LSP support
 - **Ghostty Terminal** - GPU-accelerated, modern terminal emulator
 - **Starship Prompt** - Fast, customizable, and intelligent prompt written in Rust
 - **Fastfetch** - Lightning-fast system info display with Apple logo
 - **Optimized Performance** - Instant shell startup with no lag
 - **Beautiful Themes** - TokyoNight Storm color scheme
 - **Smart Context** - Shows git info, Node/Python versions only when relevant
+- **Z Directory Jumping** - Quick navigation to frequently used directories
 
 ## 📦 Prerequisites
 
@@ -43,6 +45,12 @@ brew install starship
 
 # Install Fastfetch for system info
 brew install fastfetch
+
+# Install Neovim with dependencies
+brew install neovim ripgrep fd lazygit node
+
+# Install Z for directory jumping
+brew install z
 
 # Install fonts for better display
 brew tap homebrew/cask-fonts
@@ -84,6 +92,10 @@ mkdir -p ~/.config/ghostty
 cp .config/ghostty/config ~/.config/ghostty/
 cp .config/ghostty/switch-theme.sh ~/.config/ghostty/
 chmod +x ~/.config/ghostty/switch-theme.sh
+
+# Setup LazyVim for Neovim
+git clone https://github.com/LazyVim/starter ~/.config/nvim
+rm -rf ~/.config/nvim/.git
 ```
 
 5. **Reload your shell:**
@@ -93,6 +105,26 @@ source ~/.zshrc
 ```
 
 ## 🎨 Customization
+
+### Neovim with LazyVim
+
+LazyVim provides a complete IDE experience with:
+- **LSP Support** - Full language server protocol for autocompletion and diagnostics
+- **Treesitter** - Advanced syntax highlighting
+- **Telescope** - Fuzzy finder for files, buffers, and more
+- **Git Integration** - Built-in git signs and fugitive
+
+First launch will automatically install all plugins:
+```bash
+nvim
+```
+
+LazyVim keybindings:
+- `<space>` - Leader key
+- `<space>ff` - Find files
+- `<space>fg` - Live grep
+- `<space>e` - File explorer
+- `<space>l` - Lazy plugin manager
 
 ### Starship Prompt
 
@@ -144,20 +176,25 @@ Available themes:
 
 ## 🔧 Configuration Files
 
-- `.zshrc` - Zsh shell configuration with Starship and Fastfetch integration
+- `.zshrc` - Zsh shell configuration with all integrations
 - `starship.toml` - Starship prompt configuration
 - `fastfetch/config.jsonc` - Fastfetch system info display configuration
 - `.config/ghostty/config` - Ghostty terminal configuration
 - `.config/ghostty/switch-theme.sh` - Interactive theme switcher for Ghostty
 - `.gitignore` - Git ignore rules for the repository
+- `~/.config/nvim/` - LazyVim Neovim configuration (created during install)
 
 ## 🚀 What Gets Installed
 
+- **Neovim** - Hyperextensible Vim-based text editor
+- **LazyVim** - A Neovim config for the lazy (full IDE experience)
 - **Starship** - Cross-shell prompt (Rust-based, fast)
 - **Fastfetch** - System information tool (C-based, replaces Neofetch)
+- **Z** - Directory jumping for quick navigation
 - **JetBrains Mono** - Modern coding font with ligatures
 - **Symbols Nerd Font** - Icons and symbols for terminal
 - **Ghostty Configuration** - GPU-accelerated terminal settings (if Ghostty installed)
+- **Developer Tools** - ripgrep, fd, lazygit, node.js for enhanced development
 - **Configuration files** - Optimized configs for all tools
 
 ## 🔄 Updating
